@@ -7,7 +7,7 @@ public class EnemyController : UnitController, IEnemyController
 	private float3 _nextRoutePoint;
 	private int _curIndex;
 
-	public EnemyController(UnitSettings settings, IGameManager gameManager, BulletManager bulletManager) : base(settings, gameManager, bulletManager)
+	public EnemyController(UnitSettings settings, GameSettings gameSettings, IGameManager gameManager, BulletManager bulletManager) : base(settings, gameSettings, gameManager, bulletManager)
 	{
 		_model = new EnemyModel(gameManager.GetUniqID());
 		_model.Health = _settings.HealthPoints;

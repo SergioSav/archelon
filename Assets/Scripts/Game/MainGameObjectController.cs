@@ -51,13 +51,13 @@ public class MainGameObjectController : MonoBehaviour
 
 	private void GenerateUnitControllers(IGameManager gameManager, BulletManager bulletManager)
 	{
-		_playerController = new PlayerController(_playerSettings, gameManager, bulletManager);
+		_playerController = new PlayerController(_playerSettings, _gameSettings, gameManager, bulletManager);
 
 		var unitControllersList = new List<IUnitController> { _playerController };
 
 		foreach (var enemySet in _enemySettings)
 		{
-			var enemy = new EnemyController(enemySet, gameManager, bulletManager);
+			var enemy = new EnemyController(enemySet, _gameSettings, gameManager, bulletManager);
 			unitControllersList.Add(enemy);
 		}
 

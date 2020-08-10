@@ -7,14 +7,16 @@ public abstract class UnitController : IUnitController
 	protected IUnitModel _model;
 	protected GameObject _view;
 	protected UnitSettings _settings;
+	protected GameSettings _gameSettings;
 	protected IGameManager _gameManager;
 	protected BulletManager _bulletManager;
 
 	public bool IsAlive => _model.Health > 0;
 
-	public UnitController(UnitSettings settings, IGameManager gameManager, BulletManager bulletManager)
+	public UnitController(UnitSettings settings, GameSettings gameSettings, IGameManager gameManager, BulletManager bulletManager)
 	{
 		_settings = settings;
+		_gameSettings = gameSettings;
 		_gameManager = gameManager;
 		_bulletManager = bulletManager;
 		_view = GameObject.Instantiate(_settings.ViewPrototype, _settings.SpawnPoint, Quaternion.identity);
