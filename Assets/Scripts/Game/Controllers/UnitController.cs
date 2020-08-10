@@ -10,7 +10,7 @@ public abstract class UnitController : IUnitController
 	protected IGameManager _gameManager;
 	protected BulletManager _bulletManager;
 
-	public bool IsAlive => _model.Health >= 0;
+	public bool IsAlive => _model.Health > 0;
 
 	public UnitController(UnitSettings settings, IGameManager gameManager, BulletManager bulletManager)
 	{
@@ -39,7 +39,7 @@ public abstract class UnitController : IUnitController
 	protected void UpdateHealthView()
 	{
 		// TODO: upd hp ui
-		if (_model.Health < 0)
+		if (!IsAlive)
 		{
 			GameObject.Destroy(_view);
 			_model.RemoveChangeListener();

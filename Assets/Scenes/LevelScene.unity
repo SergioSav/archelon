@@ -291,6 +291,8 @@ GameObject:
   - component: {fileID: 895613388}
   - component: {fileID: 895613387}
   - component: {fileID: 895613386}
+  - component: {fileID: 895613389}
+  - component: {fileID: 895613390}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -356,13 +358,47 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895613385}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 30, z: -70}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!114 &895613389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895613385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25049268fd5a45647959f446914239ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 895613387}
+  _cameraSettings: {fileID: 11400000, guid: e29ef228a44f313468ca560ba3d3dbc8, type: 2}
+  _cameraAnimator: {fileID: 895613390}
+--- !u!95 &895613390
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895613385}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08fb64fbb060b4a41b462d7c0ac3b131, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1086130354
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef8c8489546c4c34e82c715eb3814ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraManager: {fileID: 895613389}
   _gameSettings: {fileID: 11400000, guid: 0380233de37c8354d8d7f17969d0a158, type: 2}
   _playerSettings: {fileID: 11400000, guid: 941a59262c2f0484c8b6d331227ade1c, type: 2}
   _enemySettings:

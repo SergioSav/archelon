@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e382f10c992966b4889e2c82d40c24f8, type: 3}
-  m_Name: GameSettings1
+  m_Script: {fileID: 11500000, guid: fbd0e618de87ab041bacd4dd0fdeb06b, type: 3}
+  m_Name: CameraSetings
   m_EditorClassIdentifier: 
-  EnemyTeamID: 1
-  IsBallisticShoot: 0
-  NeedShakeScreenOnHit: 1
-  IsDropCoinMode: 0
+  InitPosition:
+    x: 0
+    y: 30
+    z: -70
+  OffsetPosition:
+    x: 0
+    y: 0
+    z: -10

@@ -9,6 +9,7 @@ public class MainGameObjectController : MonoBehaviour
 	private IUpdateSystem _updateSystem;
 	private PlayerController _playerController;
 
+	[SerializeField] private CameraManager _cameraManager;
 	[SerializeField] private GameSettings _gameSettings;
 	[SerializeField] private UnitSettings _playerSettings;
 	[SerializeField] private UnitSettings[] _enemySettings;
@@ -26,12 +27,15 @@ public class MainGameObjectController : MonoBehaviour
 		_updateSystem = new UpdateSystem();
 		_onUpdate += _updateSystem.ExternalUpdateCall;
 
-		IGameManager gameManager = new GameManager();
+		IGameManager gameManager = new GameManager(_gameSettings);
 
 		var bulletManager = new BulletManager(_updateSystem, gameManager, _bulletSettings);
 		_disposableContainer.Add(bulletManager);
 
 		GenerateUnitControllers(gameManager, bulletManager);
+
+		_cameraManager.SetFollowTarget(_playerController);
+		gameManager.SetCameraManager(_cameraManager);
 
 		IInputManager inputManager = GetComponent<InputManager>();
 		inputManager?.SetGameManager(gameManager);

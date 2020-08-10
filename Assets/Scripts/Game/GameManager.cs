@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 
@@ -7,9 +8,12 @@ public class GameManager : IGameManager
 	private IPlayerControlManager _playerControlManager;
 	private List<IUnitController> _unitControllersList;
 	private int _uniqIDCounter;
+	private ICameraManager _cameraManager;
+	private GameSettings _gameSettings;
 
-	public GameManager()
+	public GameManager(GameSettings gameSettings)
 	{
+		_gameSettings = gameSettings;
 	}
 
 	public void QuitApplication()
@@ -91,16 +95,28 @@ public class GameManager : IGameManager
 
 			if (math.distance(unitController.GetPosition(), bullet.Position) <= bullet.ContactRadius)
 			{
-				unitController.GetDamage(bullet.DamageRate);
+				ProcessCollisionEffects(unitController, bullet);
 				return true;
 			}
 		}
 		return false;
 	}
 
+	private void ProcessCollisionEffects(IUnitController unitController, IBullet bullet)
+	{
+		if (_gameSettings.NeedShakeScreenOnHit)
+			_cameraManager.Shake();
+		unitController.GetDamage(bullet.DamageRate);
+	}
+
 	public int GetUniqID()
 	{
 		_uniqIDCounter++;
 		return _uniqIDCounter;
+	}
+
+	public void SetCameraManager(ICameraManager cameraManager)
+	{
+		_cameraManager = cameraManager;
 	}
 }
