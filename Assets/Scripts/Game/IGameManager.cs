@@ -13,4 +13,5 @@ public interface IGameManager
 
 	void SetUnitControllers(List<IUnitController> list);
 	IUnitController GetClosestEnemy(int playerTeamID, float3 playerPosition);
+	List<IEnemyController> GetEnemies(int enemiesTeamID);
 }

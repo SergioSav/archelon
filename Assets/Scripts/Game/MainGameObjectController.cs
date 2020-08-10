@@ -9,8 +9,9 @@ public class MainGameObjectController : MonoBehaviour
 	private IUpdateSystem _updateSystem;
 	private PlayerController _playerController;
 
-	[SerializeField] private UnitSettings PlayerSettings;
-	[SerializeField] private UnitSettings[] EnemySettings;
+	[SerializeField] private GameSettings _gameSettings;
+	[SerializeField] private UnitSettings _playerSettings;
+	[SerializeField] private UnitSettings[] _enemySettings;
 
 	void Start()
     {
@@ -35,15 +36,18 @@ public class MainGameObjectController : MonoBehaviour
 		playerControl.SetPlayerController(_playerController);
 		gameManager.SetPlayerControl(playerControl);
 		_disposableContainer.Add(playerControl);
+
+		var enemyControl = new EnemyControlManager(_updateSystem, gameManager, _gameSettings);
+		_disposableContainer.Add(enemyControl);
 	}
 
 	private void GenerateUnitControllers(IGameManager gameManager)
 	{
-		_playerController = new PlayerController(PlayerSettings, gameManager);
+		_playerController = new PlayerController(_playerSettings, gameManager);
 
 		var unitControllersList = new List<IUnitController> { _playerController };
 
-		foreach (var enemySet in EnemySettings)
+		foreach (var enemySet in _enemySettings)
 		{
 			var enemy = new EnemyController(enemySet, gameManager);
 			unitControllersList.Add(enemy);

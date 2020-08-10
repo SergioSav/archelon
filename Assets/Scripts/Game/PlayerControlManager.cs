@@ -8,30 +8,30 @@ enum PlayerState
 
 public class PlayerControlManager : IPlayerControlManager, IDisposable
 {
-	private static int TIME_BEFORE_SHOOT = 0;
+	private static int FRAME_BEFORE_SHOOT = 10;
 
 	private IUpdateSystem _updateSystem;
 	private PlayerState _currentState;
 	private int _idleTimer;
-	private IUnitController _playerController;
+	private IPlayerController _playerController;
 
 	public PlayerControlManager(IUpdateSystem updateSystem)
 	{
 		_currentState = PlayerState.IDLE;
 		_updateSystem = updateSystem;
-		updateSystem.AddSubscriberOnEverySecond(OnEverySecond);
+		updateSystem.AddSubscriberOnEveryUpdate(OnSystemUpdate);
 	}
 
-	private void OnEverySecond()
+	private void OnSystemUpdate()
 	{
-		if (TIME_BEFORE_SHOOT > 0)
+		if (FRAME_BEFORE_SHOOT > 0)
 		{
 			if (_currentState == PlayerState.IDLE)
 			{
 				RotateToClosestEnemy();
 				_idleTimer++;
 			}
-			if (_idleTimer >= TIME_BEFORE_SHOOT)
+			if (_idleTimer >= FRAME_BEFORE_SHOOT)
 			{
 				_idleTimer = 0;
 				MakeShoot();
@@ -84,11 +84,11 @@ public class PlayerControlManager : IPlayerControlManager, IDisposable
 
 	public void Dispose()
 	{
-		_updateSystem.RemoveSubscriberOnEverySecond(OnEverySecond);
+		_updateSystem.RemoveSubscriberOnEveryUpdate(OnSystemUpdate);
 		_updateSystem = null;
 	}
 
-	public void SetPlayerController(IUnitController playerController)
+	public void SetPlayerController(IPlayerController playerController)
 	{
 		_playerController = playerController;
 	}

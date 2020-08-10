@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106af93c6cf56eb47911c40f5ffc7d88, type: 3}
   m_Name: Enemy1Settings
   m_EditorClassIdentifier: 
-  SpawnPoint: {x: 10, y: 0, z: 0}
+  SpawnPoint: {x: -5, y: 0, z: 0}
   ViewPrototype: {fileID: 8149085584561791295, guid: 23c07696226ad4e4fb593bb8b5083937,
     type: 3}
   TeamID: 1
+  PatrolRouteContainer: {fileID: 4490568132269242263, guid: b22c813609e74964a8412618c2f0e516,
+    type: 3}
+  MoveSpeed: 2

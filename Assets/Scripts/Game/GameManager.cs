@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 
 public class GameManager : IGameManager
@@ -67,5 +68,13 @@ public class GameManager : IGameManager
 			}
 		}
 		return closestEnemy;
+	}
+
+	public List<IEnemyController> GetEnemies(int enemiesTeamID)
+	{
+		return _unitControllersList
+			.Where(c => c.GetTeamID() == enemiesTeamID)
+			.Select(c => c as IEnemyController)
+			.ToList();
 	}
 }

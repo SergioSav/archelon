@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-public class PlayerController : IUnitController
+public class PlayerController : IPlayerController
 {
 	private IUnitModel _model;
 	private GameObject _view;
@@ -59,22 +59,30 @@ public class PlayerController : IUnitController
 
 	public void MoveDown()
 	{
-		_model.Position += math.back();
+		ChangePositionAndDirection(math.back());
 	}
 
 	public void MoveLeft()
 	{
-		_model.Position += math.left();
+		ChangePositionAndDirection(math.left());
 	}
 
 	public void MoveRight()
 	{
-		_model.Position += math.right();
+		ChangePositionAndDirection(math.right());
 	}
 
 	public void MoveUp()
 	{
-		_model.Position += math.forward();
+		ChangePositionAndDirection(math.forward());
+	}
+
+	private void ChangePositionAndDirection(float3 deltaPosition)
+	{
+		var prevPos = _model.Position;
+		var nextPos = prevPos + deltaPosition * _playerSettings.MoveSpeed / 10f;
+		_model.Position = nextPos;
+		_model.Direction = math.normalize(nextPos - prevPos);
 	}
 
 	public void SearchClosestEnemy()

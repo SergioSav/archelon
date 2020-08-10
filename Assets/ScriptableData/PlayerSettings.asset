@@ -16,3 +16,5 @@ MonoBehaviour:
   ViewPrototype: {fileID: 8149085584561791295, guid: 36e1e552ba8dc03499d469a05195b8f9,
     type: 3}
   TeamID: 0
+  MoveSpeed: 4
+  PatrolRouteContainer: {fileID: 0}

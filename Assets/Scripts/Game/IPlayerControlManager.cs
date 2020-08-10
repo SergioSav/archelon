@@ -1,6 +1,6 @@
 ﻿public interface IPlayerControlManager
 {
-	void SetPlayerController(IUnitController playerController);
+	void SetPlayerController(IPlayerController playerController);
 	void MoveUp();
 	void MoveDown();
 	void MoveLeft();
