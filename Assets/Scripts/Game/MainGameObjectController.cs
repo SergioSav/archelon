@@ -7,6 +7,10 @@ public class MainGameObjectController : MonoBehaviour
 	private event Action _onUpdate;
 	private List<IDisposable> _disposableContainer;
 	private IUpdateSystem _updateSystem;
+	private PlayerController _playerController;
+
+	[SerializeField] private UnitSettings PlayerSettings;
+	[SerializeField] private UnitSettings EnemySettings;
 
 	void Start()
     {
@@ -20,14 +24,24 @@ public class MainGameObjectController : MonoBehaviour
 		_updateSystem = new UpdateSystem();
 		_onUpdate += _updateSystem.ExternalUpdateCall;
 
-		IGameManager gameManager = new MainGameManager();
+		IGameManager gameManager = new GameManager();
+
+		GenerateUnitControllers();
 
 		IInputManager inputManager = GetComponent<InputManager>();
 		inputManager?.SetGameManager(gameManager);
 
 		var playerControl = new PlayerControlManager(_updateSystem);
+		playerControl.SetPlayerController(_playerController);
 		gameManager.SetPlayerControl(playerControl);
 		_disposableContainer.Add(playerControl);
+	}
+
+	private void GenerateUnitControllers()
+	{
+		_playerController = new PlayerController(PlayerSettings);
+		var en1 = new EnemyController(EnemySettings);
+		var en2 = new EnemyController(EnemySettings);
 	}
 
 	private void Update()

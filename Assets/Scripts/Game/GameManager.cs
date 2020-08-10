@@ -1,6 +1,10 @@
-﻿public class MainGameManager : IGameManager
+﻿public class GameManager : IGameManager
 {
 	private IPlayerControlManager _playerControlManager;
+
+	public GameManager()
+	{
+	}
 
 	public void QuitApplication()
 	{
