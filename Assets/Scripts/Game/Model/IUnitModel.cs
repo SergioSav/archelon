@@ -1,13 +1,13 @@
 ﻿using System;
-using UnityEngine;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Game.Model
 {
 	public interface IUnitModel
 	{
 		int Health { get; set; }
-		Vector3 Position { get; set; }
-		Vector3 Direction { get; set; }
+		float3 Position { get; set; }
+		float3 Direction { get; set; }
 
 		void AddChangeListener(Action<ModelPropertyName> OnChange);
 		void RemoveChangeListener();

@@ -8,7 +8,7 @@ enum PlayerState
 
 public class PlayerControlManager : IPlayerControlManager, IDisposable
 {
-	private static int TIME_BEFORE_SHOOT = 2;
+	private static int TIME_BEFORE_SHOOT = 0;
 
 	private IUpdateSystem _updateSystem;
 	private PlayerState _currentState;
@@ -24,16 +24,33 @@ public class PlayerControlManager : IPlayerControlManager, IDisposable
 
 	private void OnEverySecond()
 	{
-		if (_currentState == PlayerState.IDLE)
+		if (TIME_BEFORE_SHOOT > 0)
 		{
-			_playerController.SearchClosestEnemy();
-			_idleTimer++;
+			if (_currentState == PlayerState.IDLE)
+			{
+				RotateToClosestEnemy();
+				_idleTimer++;
+			}
+			if (_idleTimer >= TIME_BEFORE_SHOOT)
+			{
+				_idleTimer = 0;
+				MakeShoot();
+			}
 		}
-		if (_idleTimer >= TIME_BEFORE_SHOOT)
+		else
 		{
-			_idleTimer = 0;
-			MakeShoot();
+			if (_currentState == PlayerState.IDLE)
+			{
+				RotateToClosestEnemy();
+				MakeShoot();
+			}
 		}
+		_currentState = PlayerState.IDLE;
+	}
+
+	public void RotateToClosestEnemy()
+	{
+		_playerController.SearchClosestEnemy();
 	}
 
 	public void MakeShoot()

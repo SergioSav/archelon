@@ -1,4 +1,6 @@
-﻿public interface IUnitController
+﻿using Unity.Mathematics;
+
+public interface IUnitController
 {
 	void SearchClosestEnemy();
 	void MakeShoot();
@@ -6,4 +8,7 @@
 	void MoveLeft();
 	void MoveRight();
 	void MoveUp();
+
+	int GetTeamID();
+	float3 GetPosition();
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Model;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : IUnitController
@@ -6,14 +7,18 @@ public class PlayerController : IUnitController
 	private IUnitModel _model;
 	private GameObject _view;
 	private UnitSettings _playerSettings;
+	private IGameManager _gameManager;
 
-	public PlayerController(UnitSettings playerSettings)
+	public PlayerController(UnitSettings playerSettings, IGameManager gameManager)
 	{
 		_playerSettings = playerSettings;
+		_gameManager = gameManager;
 
 		_model = new PlayerModel();
-		_view = GameObject.Instantiate(playerSettings.view, playerSettings.spawnPoint, Quaternion.identity);
+		_model.Position = playerSettings.SpawnPoint;
 		_model.AddChangeListener(OnModelUpdate);
+
+		_view = GameObject.Instantiate(playerSettings.ViewPrototype, playerSettings.SpawnPoint, Quaternion.identity);
 	}
 
 	private void OnModelUpdate(ModelPropertyName propertyName)
@@ -54,27 +59,40 @@ public class PlayerController : IUnitController
 
 	public void MoveDown()
 	{
-		_model.Position += Vector3.back;
+		_model.Position += math.back();
 	}
 
 	public void MoveLeft()
 	{
-		_model.Position += Vector3.left;
+		_model.Position += math.left();
 	}
 
 	public void MoveRight()
 	{
-		_model.Position += Vector3.right;
+		_model.Position += math.right();
 	}
 
 	public void MoveUp()
 	{
-		_model.Position += Vector3.forward;
+		_model.Position += math.forward();
 	}
 
 	public void SearchClosestEnemy()
 	{
-		// TODO:
-		Debug.LogError("search...");
+		var enemy = _gameManager.GetClosestEnemy(_playerSettings.TeamID, _model.Position);
+		if (enemy != null)
+		{
+			_model.Direction = math.normalize(enemy.GetPosition() - _model.Position);
+		}
+	}
+
+	public int GetTeamID()
+	{
+		return _playerSettings.TeamID;
+	}
+
+	public float3 GetPosition()
+	{
+		return _model.Position;
 	}
 }

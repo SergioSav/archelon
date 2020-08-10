@@ -1,4 +1,7 @@
-﻿public interface IGameManager
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
+
+public interface IGameManager
 {
 	void QuitApplication();
 
@@ -7,4 +10,7 @@
 	void MovePlayerDown();
 	void MovePlayerLeft();
 	void MovePlayerRight();
+
+	void SetUnitControllers(List<IUnitController> list);
+	IUnitController GetClosestEnemy(int playerTeamID, float3 playerPosition);
 }

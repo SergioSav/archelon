@@ -1,6 +1,10 @@
-﻿public class GameManager : IGameManager
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
+
+public class GameManager : IGameManager
 {
 	private IPlayerControlManager _playerControlManager;
+	private List<IUnitController> _unitControllersList;
 
 	public GameManager()
 	{
@@ -13,9 +17,8 @@
 		UnityEditor.EditorApplication.isPlaying = false;
 #endif
 	}
-
-
-#region PlayerControl
+	
+	#region PlayerControl
 	public void SetPlayerControl(IPlayerControlManager playerControl)
 	{
 		_playerControlManager = playerControl;
@@ -40,5 +43,29 @@
 	{
 		_playerControlManager.MoveRight();
 	}
-#endregion
+	#endregion
+
+	public void SetUnitControllers(List<IUnitController> unitControllersList)
+	{
+		_unitControllersList = unitControllersList;
+	}
+
+	public IUnitController GetClosestEnemy(int playerTeamID, float3 playerPosition)
+	{
+		IUnitController closestEnemy = null;
+		var minDistance = float.MaxValue;
+		foreach (var controller in _unitControllersList)
+		{
+			if (controller.GetTeamID() != playerTeamID)
+			{
+				var dist = math.distance(controller.GetPosition(), playerPosition);
+				if (dist < minDistance)
+				{
+					minDistance = dist;
+					closestEnemy = controller;
+				}
+			}
+		}
+		return closestEnemy;
+	}
 }

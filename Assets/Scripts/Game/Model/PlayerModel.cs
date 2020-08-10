@@ -1,17 +1,17 @@
 ﻿using Assets.Scripts.Game.Model;
 using System;
-using UnityEngine;
+using Unity.Mathematics;
 
 public class PlayerModel : IUnitModel
 {
 	private int health;
-	private Vector3 position;
-	private Vector3 direction;
+	private float3 position;
+	private float3 direction;
 	private Action<ModelPropertyName> _onChange;
 
 	private event Action<ModelPropertyName> _propertyChanged;
 
-	public Vector3 Position
+	public float3 Position
 	{
 		get => position;
 		set
@@ -21,7 +21,7 @@ public class PlayerModel : IUnitModel
 		}
 	}
 
-	public Vector3 Direction
+	public float3 Direction
 	{
 		get => direction;
 		set
