@@ -8,7 +8,7 @@ enum PlayerState
 
 public class PlayerControlManager : IPlayerControlManager, IDisposable
 {
-	private static int FRAME_BEFORE_SHOOT = 10;
+	private static int FRAME_BEFORE_SHOOT = 30;
 
 	private IUpdateSystem _updateSystem;
 	private PlayerState _currentState;

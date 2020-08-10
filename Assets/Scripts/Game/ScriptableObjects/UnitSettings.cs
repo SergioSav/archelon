@@ -8,6 +8,8 @@ public class UnitSettings : ScriptableObject
 	public int TeamID;
 	[Range(1f, 10f)]
 	public float MoveSpeed = 5f;
+	[Range(1, 5)]
+	public int HealthPoints = 3;
 
 	[Header("For enemies only")]
 	public GameObject PatrolRouteContainer;

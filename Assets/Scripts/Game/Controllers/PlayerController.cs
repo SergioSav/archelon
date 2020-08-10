@@ -1,60 +1,15 @@
-﻿using Assets.Scripts.Game.Model;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using Unity.Mathematics;
 
-public class PlayerController : IPlayerController
+public class PlayerController : UnitController, IPlayerController
 {
-	private IUnitModel _model;
-	private GameObject _view;
-	private UnitSettings _playerSettings;
-	private IGameManager _gameManager;
+	private bool _needShoot;
 
-	public PlayerController(UnitSettings playerSettings, IGameManager gameManager)
+	public PlayerController(UnitSettings settings, IGameManager gameManager, BulletManager bulletManager) : base(settings, gameManager, bulletManager)
 	{
-		_playerSettings = playerSettings;
-		_gameManager = gameManager;
-
-		_model = new PlayerModel();
-		_model.Position = playerSettings.SpawnPoint;
+		_model = new PlayerModel(gameManager.GetUniqID());
+		_model.Health = _settings.HealthPoints;
+		_model.Position = _settings.SpawnPoint;
 		_model.AddChangeListener(OnModelUpdate);
-
-		_view = GameObject.Instantiate(playerSettings.ViewPrototype, playerSettings.SpawnPoint, Quaternion.identity);
-	}
-
-	private void OnModelUpdate(ModelPropertyName propertyName)
-	{
-		switch (propertyName)
-		{
-			case ModelPropertyName.HEALTH:
-				UpdateHealthView();
-				break;
-			case ModelPropertyName.POSITION:
-				UpdateViewPosition();
-				break;
-			case ModelPropertyName.DIRECTION:
-				UpdateViewDirection();
-				break;
-		}
-	}
-
-	private void UpdateHealthView()
-	{
-		// TODO: upd hp ui
-	}
-
-	private void UpdateViewPosition()
-	{
-		_view.transform.position = _model.Position;
-	}
-
-	private void UpdateViewDirection()
-	{
-		_view.transform.forward = _model.Direction;
-	}
-
-	public void MakeShoot()
-	{
-		Debug.LogError("Bang!");
 	}
 
 	public void MoveDown()
@@ -80,27 +35,28 @@ public class PlayerController : IPlayerController
 	private void ChangePositionAndDirection(float3 deltaPosition)
 	{
 		var prevPos = _model.Position;
-		var nextPos = prevPos + deltaPosition * _playerSettings.MoveSpeed / 10f;
+		var nextPos = prevPos + deltaPosition * _settings.MoveSpeed / 10f;
 		_model.Position = nextPos;
 		_model.Direction = math.normalize(nextPos - prevPos);
 	}
 
-	public void SearchClosestEnemy()
+	public override void MakeShoot()
 	{
-		var enemy = _gameManager.GetClosestEnemy(_playerSettings.TeamID, _model.Position);
+		if (_needShoot)
+			_bulletManager.Shoot(_model.Position, _model.Direction, BulletType.SIMPLE, _model.UnitID);
+	}
+
+	public override void SearchClosestEnemy()
+	{
+		var enemy = _gameManager.GetClosestEnemy(_settings.TeamID, _model.Position);
 		if (enemy != null)
 		{
+			_needShoot = true;
 			_model.Direction = math.normalize(enemy.GetPosition() - _model.Position);
 		}
-	}
-
-	public int GetTeamID()
-	{
-		return _playerSettings.TeamID;
-	}
-
-	public float3 GetPosition()
-	{
-		return _model.Position;
+		else
+		{
+			_needShoot = false;
+		}
 	}
 }

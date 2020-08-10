@@ -12,6 +12,7 @@ public class MainGameObjectController : MonoBehaviour
 	[SerializeField] private GameSettings _gameSettings;
 	[SerializeField] private UnitSettings _playerSettings;
 	[SerializeField] private UnitSettings[] _enemySettings;
+	[SerializeField] private BulletSettings[] _bulletSettings;
 
 	void Start()
     {
@@ -27,7 +28,10 @@ public class MainGameObjectController : MonoBehaviour
 
 		IGameManager gameManager = new GameManager();
 
-		GenerateUnitControllers(gameManager);
+		var bulletManager = new BulletManager(_updateSystem, gameManager, _bulletSettings);
+		_disposableContainer.Add(bulletManager);
+
+		GenerateUnitControllers(gameManager, bulletManager);
 
 		IInputManager inputManager = GetComponent<InputManager>();
 		inputManager?.SetGameManager(gameManager);
@@ -41,15 +45,15 @@ public class MainGameObjectController : MonoBehaviour
 		_disposableContainer.Add(enemyControl);
 	}
 
-	private void GenerateUnitControllers(IGameManager gameManager)
+	private void GenerateUnitControllers(IGameManager gameManager, BulletManager bulletManager)
 	{
-		_playerController = new PlayerController(_playerSettings, gameManager);
+		_playerController = new PlayerController(_playerSettings, gameManager, bulletManager);
 
 		var unitControllersList = new List<IUnitController> { _playerController };
 
 		foreach (var enemySet in _enemySettings)
 		{
-			var enemy = new EnemyController(enemySet, gameManager);
+			var enemy = new EnemyController(enemySet, gameManager, bulletManager);
 			unitControllersList.Add(enemy);
 		}
 

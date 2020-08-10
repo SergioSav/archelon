@@ -424,6 +424,10 @@ MonoBehaviour:
   _enemySettings:
   - {fileID: 11400000, guid: f68fb9e3745ac3549b83a980c436af97, type: 2}
   - {fileID: 11400000, guid: c394b49377f58b24cab084fdc5f026a2, type: 2}
+  _bulletSettings:
+  - {fileID: 11400000, guid: 7c0972aa6ff88764ebcbb9b720b715ea, type: 2}
+  - {fileID: 11400000, guid: 185032eb03634034ba4fc4ba4a052a33, type: 2}
+  - {fileID: 11400000, guid: 04cbec50358babf42a42017804e47e32, type: 2}
 --- !u!1 &1685942874
 GameObject:
   m_ObjectHideFlags: 0

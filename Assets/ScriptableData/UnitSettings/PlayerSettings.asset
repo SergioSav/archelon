@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 106af93c6cf56eb47911c40f5ffc7d88, type: 3}
-  m_Name: Enemy2Settings
+  m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  SpawnPoint: {x: 5, y: 0, z: 0}
-  ViewPrototype: {fileID: 8149085584561791295, guid: 23c07696226ad4e4fb593bb8b5083937,
+  SpawnPoint: {x: 0, y: 0, z: -20}
+  ViewPrototype: {fileID: 8149085584561791295, guid: 36e1e552ba8dc03499d469a05195b8f9,
     type: 3}
-  TeamID: 1
-  PatrolRouteContainer: {fileID: 6273004890839067382, guid: c74e0c3b8562e814fb63eff57de45df3,
-    type: 3}
-  MoveSpeed: 5
+  TeamID: 0
+  MoveSpeed: 4
+  HealthPoints: 5
+  PatrolRouteContainer: {fileID: 0}
