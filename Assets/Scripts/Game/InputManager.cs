@@ -16,21 +16,15 @@ public class InputManager : MonoBehaviour, IInputManager
 			_gameManager.QuitApplication();
 		}
 
-		if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-		{
-			_gameManager.MovePlayerUp();
-		}
-		if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-		{
-			_gameManager.MovePlayerDown();
-		}
-		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-		{
-			_gameManager.MovePlayerLeft();
-		}
-		if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-		{
-			_gameManager.MovePlayerRight();
-		}
+        var horizontalMoveAxis = Input.GetAxis("Horizontal");
+        var verticalMoveAxis = Input.GetAxis("Vertical");
+        if (horizontalMoveAxis > 0)
+            _gameManager.MovePlayerRight();
+        if (horizontalMoveAxis < 0)
+            _gameManager.MovePlayerLeft();
+        if (verticalMoveAxis > 0)
+            _gameManager.MovePlayerUp();
+        if (verticalMoveAxis < 0)
+            _gameManager.MovePlayerDown();
 	}
 }

@@ -16,6 +16,7 @@ MonoBehaviour:
   ViewPrototype: {fileID: 8149085584561791295, guid: 23c07696226ad4e4fb593bb8b5083937,
     type: 3}
   TeamID: 1
-  MoveSpeed: 5
+  MoveSpeed: 1
+  HealthPoints: 3
   PatrolRouteContainer: {fileID: 6273004890839067382, guid: c74e0c3b8562e814fb63eff57de45df3,
     type: 3}
