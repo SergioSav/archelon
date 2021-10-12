@@ -35,12 +35,11 @@ public class EnemyController : UnitController, IEnemyController
 
 	private float3 GetNextRoutePoint()
 	{
-		var availableRoutePoints = _settings.PatrolRouteContainer.GetComponentsInChildren<Transform>()
-			.Skip(1)
-			.OrderBy(t => t.name)
-			.Select(t => t.position)
-			.ToList();
-		var nextIndex = (_curIndex + 1) % availableRoutePoints.Count;
+        var availableRoutePoints = _settings.PatrolRouteContainer.Points
+            .OrderBy(t => t.name)
+            .Select(t => t.position)
+            .ToList();
+        var nextIndex = (_curIndex + 1) % availableRoutePoints.Count;
 		_curIndex = nextIndex;
 		return availableRoutePoints[_curIndex];
 	}

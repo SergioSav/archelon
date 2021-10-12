@@ -69,6 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4490568132269242260}
+  - component: {fileID: 6337447415591356408}
   m_Layer: 0
   m_Name: EnemyRoute1
   m_TagString: Untagged
@@ -96,6 +97,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6337447415591356408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490568132269242263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0d741302ff2a34bbe0936c48070c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _routePoints:
+  - {fileID: 4490568131922241986}
+  - {fileID: 4490568133009965109}
+  - {fileID: 4490568131976055772}
+  - {fileID: 4490568133182037859}
+  - {fileID: 2633609743271949259}
+  - {fileID: 4111636863030754864}
 --- !u!1 &4490568133009965108
 GameObject:
   m_ObjectHideFlags: 0

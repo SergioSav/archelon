@@ -99,6 +99,10 @@ public class GameManager : IGameManager
 				return true;
 			}
 		}
+
+        if (math.distance(float3.zero, bullet.Position) > 100f)
+            return true;
+
 		return false;
 	}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 
 public enum BulletType
@@ -16,6 +17,7 @@ public class BulletManager : IDisposable
 	private BulletSettings[] _bulletSettings;
 	private List<IBullet> _activeBullets;
 	private List<IBullet> _bulletsForDestroy;
+    private Dictionary<BulletType, IBulletPool> _bulletPools;
 
 	public BulletManager(IUpdateSystem updateSystem, IGameManager gameManager, BulletSettings[] bulletSettings)
 	{
@@ -25,10 +27,20 @@ public class BulletManager : IDisposable
 		_updateSystem = updateSystem;
 		_gameManager = gameManager;
 		_bulletSettings = bulletSettings;
+        CreatePools();
 		_updateSystem.AddSubscriberOnEveryUpdate(OnEveryUpdate);
 	}
 
-	private void OnEveryUpdate()
+    private void CreatePools()
+    {
+        _bulletPools = new Dictionary<BulletType, IBulletPool>();
+        foreach (var type in _bulletSettings.Select(b => b.BulletType))
+        {
+            _bulletPools[type] = BulletPoolFactory.CreateBulletPool(type, _bulletSettings);
+        }
+    }
+
+    private void OnEveryUpdate()
 	{
 		foreach (var bullet in _activeBullets)
 		{
@@ -41,15 +53,17 @@ public class BulletManager : IDisposable
 		foreach (var bullet in _bulletsForDestroy)
 		{
 			_activeBullets.Remove(bullet);
-			bullet.Destroy();
+			bullet.Deactivate();
+            _bulletPools[bullet.BulletType].Push(bullet);
 		}
 		_bulletsForDestroy.Clear();
 	}
 
 	public void Shoot(float3 fromPosition, float3 direction, BulletType bulletType, int unitID)
 	{
-		var bullet = BulletFactory.CreateBullet(bulletType, _bulletSettings);
-		bullet.SetInitValues(fromPosition, direction, unitID);
+        var bullet = _bulletPools[bulletType].Pull();
+		bullet.SetInitValues(bulletType, fromPosition, direction, unitID);
+        bullet.Activate();
 		_activeBullets.Add(bullet);
 	}
 

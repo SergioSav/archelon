@@ -12,5 +12,5 @@ public class UnitSettings : ScriptableObject
 	public int HealthPoints = 3;
 
 	[Header("For enemies only")]
-	public GameObject PatrolRouteContainer;
+	public EnemyRoute PatrolRouteContainer;
 }

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class Bullet : IBullet
 {
-	protected float3 _position;
+    private BulletType _type;
+    protected float3 _position;
 	protected float3 _direction;
 	protected GameObject _view;
 	protected BulletSettings _settings;
@@ -13,7 +14,8 @@ public abstract class Bullet : IBullet
 	{
 		_settings = settings;
 		_view = GameObject.Instantiate(settings.ViewPrototype, _position, quaternion.identity);
-	}
+        Deactivate();
+    }
 
 	public float3 Position
 	{
@@ -33,6 +35,7 @@ public abstract class Bullet : IBullet
 	public float ContactRadius => _settings.ContactRadius;
 	public int DamageRate => _settings.DamageRate;
 	public int UnitID => _unitID;
+    public BulletType BulletType => _type;
 	
 	public void UpdateViewPositionAndDirection()
 	{
@@ -42,15 +45,26 @@ public abstract class Bullet : IBullet
 
 	public void Destroy()
 	{
-		GameObject.Destroy(_view);
+        GameObject.Destroy(_view);
 	}
 
-	public void SetInitValues(float3 startPosition, float3 direction, int unitID)
+	public void SetInitValues(BulletType type, float3 startPosition, float3 direction, int unitID)
 	{
+        _type = type;
 		_position = startPosition;
 		_direction = direction;
 		UpdateViewPositionAndDirection();
 
 		_unitID = unitID;
 	}
+
+    public void Deactivate()
+    {
+        _view.SetActive(false);
+    }
+
+    public void Activate()
+    {
+        _view.SetActive(true);
+    }
 }

@@ -8,7 +8,10 @@ public interface IBullet
 	float ContactRadius { get; }
 	int DamageRate { get; }
 	int UnitID { get; }
+    BulletType BulletType { get; }
 
-	void Destroy();
-	void SetInitValues(float3 startPosition, float3 direction, int unitID);
+    void Activate();
+    void Deactivate();
+    void Destroy();
+	void SetInitValues(BulletType bulletType, float3 startPosition, float3 direction, int unitID);
 }

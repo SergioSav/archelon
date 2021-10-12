@@ -16,8 +16,8 @@ public class InputManager : MonoBehaviour, IInputManager
 			_gameManager.QuitApplication();
 		}
 
-        var horizontalMoveAxis = Input.GetAxis("Horizontal");
-        var verticalMoveAxis = Input.GetAxis("Vertical");
+        var horizontalMoveAxis = SimpleInput.GetAxis("Horizontal");
+        var verticalMoveAxis = SimpleInput.GetAxis("Vertical");
         if (horizontalMoveAxis > 0)
             _gameManager.MovePlayerRight();
         if (horizontalMoveAxis < 0)
